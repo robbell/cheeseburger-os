@@ -1,9 +1,15 @@
 ORG 0                   ; Set origin
 BITS 16
 
-jmp 0x7c0:start         ; Set start procedure address
+init:
+    jmp short start
+    nop
+    times 33 db 0       ; Add dummy BIOS parameter block
 
 start:
+    jmp 0x7c0:main      ; Set start procedure address
+
+main:
     cli                 ; Clear interrupts
     mov ax, 0x7c0       
     mov ds, ax          ; Move into data segment
