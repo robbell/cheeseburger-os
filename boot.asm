@@ -1,7 +1,18 @@
-ORG 0x7c00
+ORG 0                   ; Set origin
 BITS 16
 
+jmp 0x7c0:start         ; Set start procedure address
+
 start:
+    cli                 ; Clear interrupts
+    mov ax, 0x7c0       
+    mov ds, ax          ; Move into data segment
+    mov es, ax          ; Move into extra segment
+    mov ax, 0x00
+    mov ss, ax          ; Set stack segment
+    mov sp, 0x7c00      ; Set stack pointer
+    sti                 ; Re-enable interrupts
+
     mov si, message     ; Move address of message into si register
     call print          ; Call print procedure
     jmp $               ; Loop forever
